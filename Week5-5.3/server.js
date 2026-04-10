@@ -22,7 +22,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
 // 3. Routes
-const booksRoute = require('./routes/booksRoute');
+const booksRoute = require('./routes/books.route');
 app.use('/api/books', booksRoute);
 
 app.listen(PORT, () => {
