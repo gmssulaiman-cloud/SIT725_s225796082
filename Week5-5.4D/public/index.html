@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Books Catalogue</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 20px; background: #f4f4f4; }
+    h1 { color: #2c3e50; text-align: center; }
+    .container { max-width: 1100px; margin: 0 auto; display: flex; gap: 30px; }
+    .list-section { flex: 1; }
+    .details-section { flex: 1; background: white; padding: 25px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
+    button { padding: 14px 30px; font-size: 16px; background: #2980b9; color: white; border: none; border-radius: 8px; cursor: pointer; }
+    button:hover { background: #1f6a9e; }
+    .book-item { background: white; padding: 18px; margin: 10px 0; border-radius: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); cursor: pointer; }
+    .book-item:hover { background: #f0f8ff; }
+    .book-item strong { color: #2980b9; font-size: 1.1em; }
+    .price { color: #27ae60; font-weight: bold; }
+    .details p { margin: 10px 0; line-height: 1.6; }
+  </style>
+</head>
+<body>
+  <h1>Books Catalogue Developed by s225796082</h1>
+  <p style="text-align:center; font-size:18px;">Click the button below to get all books from the server:</p>
+  
+  <div style="text-align:center; margin:25px 0;">
+    <button onclick="getAllBooks()">Get all books</button>
+  </div>
+
+  <div class="container">
+    <!-- Book List -->
+    <div class="list-section">
+      <h2>📚 Book List</h2>
+      <div id="books-list"></div>
+    </div>
+
+    <!-- Book Details -->
+    <div class="details-section">
+      <h2>📖 Book Details</h2>
+      <div id="book-details">
+        <p style="color:#777; text-align:center;">Click any book from the list to see full details here.</p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    let allBooks = [];
+
+    async function getAllBooks() {
+      const listDiv = document.getElementById('books-list');
+      listDiv.innerHTML = '<p>Loading books...</p>';
+
+      try {
+        const res = await fetch('/api/books');
+        const result = await res.json();
+        allBooks = result.data;
+
+        let html = '';
+        allBooks.forEach(book => {
+          const price = Number(book.price).toFixed(2);   // <-- FIXED price display
+          html += `
+            <div class="book-item" onclick="showBookDetails('${book.id}')">
+              <strong>${book.title}</strong><br>
+              <span class="price">${price} AUD</span>
+            </div>`;
+        });
+        listDiv.innerHTML = html;
+      } catch (err) {
+        listDiv.innerHTML = '<p style="color:red;">Error loading books.</p>';
+      }
+    }
+
+    async function showBookDetails(id) {
+      const detailsDiv = document.getElementById('book-details');
+      detailsDiv.innerHTML = '<p>Loading details...</p>';
+
+      try {
+        const res = await fetch(`/api/books/${id}`);
+        const result = await res.json();
+        const book = result.data;
+
+        const price = Number(book.price).toFixed(2);   // <-- FIXED price display
+
+        detailsDiv.innerHTML = `
+          <div class="details">
+            <h3>${book.title}</h3>
+            <p><strong>Author:</strong> ${book.author}</p>
+            <p><strong>Year:</strong> ${book.year}</p>
+            <p><strong>Genre:</strong> ${book.genre}</p>
+            <p><strong>Summary:</strong> ${book.summary}</p>
+            <p><strong>Price (AUD):</strong> ${price}</p>
+          </div>`;
+      } catch (err) {
+        detailsDiv.innerHTML = '<p style="color:red;">Error loading details.</p>';
+      }
+    }
+  </script>
+</body>
+</html>
