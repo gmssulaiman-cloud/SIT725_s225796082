@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Book Library - Week 4</title>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <nav>
+    <div class="nav-wrapper navbar-size">
+      <a href="#" class="brand-logo left">
+        <img src="images/logo.png" alt="Book Logo" class="user-image-size">
+      </a>
+      <ul id="nav-mobile" class="right hide-on-med-and-down">
+        <li>
+          <a class="waves-effect waves-light btn click-me-button modal-trigger" href="#modal1">
+            Click Me
+          </a>
+        </li>
+        <li>
+          <a href="https://github.com" target="_blank">GitHub</a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+
+  <main class="main-body">
+    <div class="container">
+      <div class="row">
+        <div class="col s12 center-align">
+          <h1 id="heading">Welcome to Book Collection</h1>
+          <p class="flow-text">
+            The collection of classical books (Week 4: MongoDB Backend)
+          </p>
+        </div>
+
+        <div class="col s12 center-align">
+          <img class="materialboxed materialboxed-image" src="images/book1.jpg" alt="Featured book">
+        </div>
+
+        <!-- Load button now auto-loads on page load, but keep for manual refresh -->
+        <div class="col s12 center-align">
+          <a class="waves-effect waves-light btn load-books-button" id="loadBooksButton">
+            <i class="material-icons left">library_books</i>Load Books
+          </a>
+        </div>
+      </div>
+
+      <!-- CRITICAL: Changed ID from "card-section" to "books-container" to match scripts.js -->
+      <div class="row" id="books-container">
+        <!-- Books load here automatically from MongoDB -->
+      </div>
+    </div>
+
+    <!-- Modal (unchanged, works with new scripts.js) -->
+    <div id="modal1" class="modal modal-fixed-footer">
+      <div class="row modal-content">
+        <form class="col s12">
+          <div class="row">
+            <div class="input-field col s6">
+              <input placeholder="Placeholder" id="firstname" type="text" class="validate">
+              <label for="firstname">First Name</label>
+            </div>
+            <div class="input-field col s6">
+              <input id="lastname" type="text" class="validate">
+              <label for="lastname">Last Name</label>
+            </div>
+          </div>
+          <div class="row">
+            <div class="input-field col s12">
+              <input id="password" type="password" class="validate">
+              <label for="password">Password</label>
+            </div>
+          </div>
+          <div class="row">
+            <div class="input-field col s12">
+              <input id="email" type="email" class="validate">
+              <label for="email">Email</label>
+            </div>
+          </div>
+          <div class="row">
+            <div class="input-field col s12 center-align">
+              <!-- Button ID matches scripts.js -->
+              <a class="waves-effect waves-light btn" id="formSubmit">Submit</a>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <a href="#!" class="modal-close waves-effect waves-light btn red">Close</a>
+      </div>
+    </div>
+  </main>
+
+  <!-- Scripts in correct order: jQuery → Materialize → your scripts -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+  <script src="js/scripts.js"></script>
+</body>
+</html>
