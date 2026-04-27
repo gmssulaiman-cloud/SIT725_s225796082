@@ -1,15 +1,5 @@
 const mongoose = require('mongoose');
 
-const allowedGenres = [
-  'Science Fiction',
-  'Classic',
-  'Historical Fiction',
-  'Fantasy',
-  'Romance',
-  'Mystery',
-  'Non-Fiction'
-];
-
 const BookSchema = new mongoose.Schema({
   id: {
     type: String,
@@ -36,16 +26,16 @@ const BookSchema = new mongoose.Schema({
   year: {
     type: Number,
     required: [true, 'Year is required'],
+    validate: {
+      validator: Number.isInteger,
+      message: 'Year must be an integer'
+    },
     min: [1000, 'Year must be 1000 or later'],
-    max: [new Date().getFullYear(), 'Year cannot be in the future']
+    max: [2030, 'Year cannot be in the distant future']
   },
   genre: {
     type: String,
-    required: [true, 'Genre is required'],
-    enum: {
-      values: allowedGenres,
-      message: 'Genre must be one of the allowed values'
-    }
+    required: [true, 'Genre is required']
   },
   summary: {
     type: String,
@@ -58,11 +48,11 @@ const BookSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.Decimal128,
     required: [true, 'Price is required'],
     validate: {
-      validator: function (value) {
+      validator: function(value) {
         const num = parseFloat(value.toString());
-        return !Number.isNaN(num) && num > 0 && num <= 999.99;
+        return num >= 0.01 && num <= 999.99;
       },
-      message: 'Price must be greater than 0 and at most 999.99'
+      message: 'Price must be between 0.01 and 999.99'
     }
   }
 }, {
