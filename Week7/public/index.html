@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Live Status Board</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="container">
+    <h1>Live Status Board</h1>
+    <p id="welcome"></p>
+
+    <input type="text" id="statusInput" placeholder="Type a status update..." />
+    <button id="sendBtn">Send Update</button>
+
+    <ul id="statusList"></ul>
+  </div>
+
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="scripts.js"></script>
+</body>
+</html>
